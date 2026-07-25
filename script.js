@@ -2,7 +2,7 @@ import {
     ref,
     set,
     onValue
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
 
 const items = {
@@ -183,7 +183,7 @@ window.saveItem=function(item,value){
 
 
 set(
-ref(database,"items/"+item),
+ref(window.database,"items/"+item),
 value
 );
 
@@ -198,7 +198,7 @@ value
 
 
 onValue(
-ref(database,"items"),
+ref(window.database,"items"),
 (snapshot)=>{
 
 
@@ -232,7 +232,7 @@ items[category].forEach(item=>{
 
 
 set(
-ref(database,"items/"+item),
+ref(window.database,"items/"+item),
 false
 );
 
