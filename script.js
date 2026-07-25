@@ -28,13 +28,16 @@ const database = getDatabase(app);
 
 const items = {
 
-    "Crops": [
+    "🌱 Crops & Plants": [
         "Wheat",
+        "Wheat Seeds",
         "Carrots",
         "Potatoes",
         "Beetroot",
+        "Beetroot Seeds",
         "Pumpkin",
         "Melon",
+        "Melon Seeds",
         "Sugar Cane",
         "Bamboo",
         "Cactus",
@@ -42,13 +45,23 @@ const items = {
         "Nether Wart",
         "Sweet Berries",
         "Glow Berries",
-        "Kelp",
-        "Sea Pickles",
         "Torchflower Seeds",
-        "Pitcher Pods"
+        "Pitcher Pods",
+        "Kelp",
+        "Sea Pickle",
+        "Moss Block",
+        "Moss Carpet",
+        "Vines",
+        "Cave Vines",
+        "Weeping Vines",
+        "Twisting Vines",
+        "Azalea",
+        "Flowering Azalea",
+        "Spore Blossom"
     ],
 
-    "Trees": [
+
+    "🌲 Trees & Wood": [
         "Oak Log",
         "Spruce Log",
         "Birch Log",
@@ -59,66 +72,195 @@ const items = {
         "Cherry Log",
         "Pale Oak Log",
         "Crimson Stem",
-        "Warped Stem"
+        "Warped Stem",
+        "Oak Sapling",
+        "Spruce Sapling",
+        "Birch Sapling",
+        "Jungle Sapling",
+        "Acacia Sapling",
+        "Dark Oak Sapling",
+        "Mangrove Propagule",
+        "Cherry Sapling",
+        "Pale Oak Sapling"
     ],
 
-    "Animal Farms": [
+
+    "🐄 Passive Mob Farms": [
         "Leather",
         "Beef",
-        "Mutton",
         "Wool",
-        "Eggs",
-        "Chicken",
+        "Mutton",
         "Porkchop",
+        "Chicken",
+        "Feathers",
+        "Eggs",
         "Rabbit Hide",
         "Rabbit Foot",
+        "Rabbit",
+        "Milk",
         "Honey",
         "Honeycomb",
-        "Milk",
-        "Scute"
+        "Ink Sac",
+        "Glow Ink Sac",
+        "Scute",
+        "Turtle Egg",
+        "Goat Horn",
+        "Frogspawn",
+        "Froglight"
     ],
 
-    "Mob Farms": [
+
+    "👹 Hostile Mob Farms": [
         "Rotten Flesh",
         "Bones",
+        "Bone Meal",
         "Arrows",
-        "Gunpowder",
         "String",
         "Spider Eye",
+        "Gunpowder",
         "Ender Pearl",
-        "Blaze Rod",
         "Slimeball",
+        "Blaze Rod",
+        "Blaze Powder",
         "Magma Cream",
         "Ghast Tear",
-        "Prismarine Shards",
-        "Prismarine Crystals",
         "Wither Skeleton Skull",
+        "Coal",
+        "Phantom Membrane",
+        "Shulker Shell",
+        "Wind Charge",
+        "Breeze Rod",
         "Trident"
     ],
 
-    "Villager Trading": [
-        "Emeralds",
-        "Enchanted Books",
-        "Name Tags",
-        "Saddles",
-        "Diamond Tools",
-        "Diamond Armor",
-        "Glass",
-        "Redstone Dust",
-        "Glowstone Dust"
-    ],
 
-    "Block Farms": [
+    "⛏ Block Generators": [
         "Cobblestone",
         "Stone",
         "Smooth Stone",
+        "Mossy Cobblestone",
+        "Cobbled Deepslate",
         "Basalt",
+        "Blackstone",
         "Obsidian",
         "Lava",
-        "Snowballs",
+        "Water",
+        "Ice",
+        "Packed Ice",
+        "Blue Ice",
+        "Snow",
+        "Snow Block",
         "Clay",
         "Mud",
-        "Dripstone"
+        "Dripstone",
+        "Sand",
+        "Red Sand",
+        "Gravel"
+    ],
+
+
+    "🔥 Nether Resources": [
+        "Netherrack",
+        "Soul Sand",
+        "Soul Soil",
+        "Nether Brick",
+        "Quartz",
+        "Quartz Block",
+        "Glowstone",
+        "Magma Block",
+        "Crimson Fungus",
+        "Warped Fungus"
+    ],
+
+
+    "💎 Villager Trading": [
+        "Emerald",
+        "Enchanted Books",
+        "Name Tag",
+        "Saddle",
+        "Glass",
+        "Redstone Dust",
+        "Glowstone Dust",
+        "Diamond Tools",
+        "Diamond Armor",
+        "Maps"
+    ],
+
+
+    "🔴 Redstone Materials": [
+        "Redstone Dust",
+        "Glowstone Dust",
+        "Quartz",
+        "Iron",
+        "Iron Nuggets",
+        "Gold",
+        "Gold Nuggets",
+        "Copper",
+        "Slimeball",
+        "Honey",
+        "Honeycomb",
+        "Amethyst Shard"
+    ],
+
+
+    "🧪 Brewing": [
+        "Nether Wart",
+        "Blaze Powder",
+        "Sugar",
+        "Spider Eye",
+        "Fermented Spider Eye",
+        "Rabbit Foot",
+        "Pufferfish",
+        "Magma Cream",
+        "Ghast Tear",
+        "Golden Carrot",
+        "Glistering Melon",
+        "Phantom Membrane"
+    ],
+
+
+    "🎣 Fishing & Ocean": [
+        "Cod",
+        "Salmon",
+        "Tropical Fish",
+        "Pufferfish",
+        "Nautilus Shell",
+        "Fishing Rod",
+        "Name Tag",
+        "Saddle"
+    ],
+
+
+    "🏗 Building Materials": [
+        "Glass",
+        "Glass Pane",
+        "Brick",
+        "Stone Brick",
+        "Mossy Stone Brick",
+        "Granite",
+        "Diorite",
+        "Andesite",
+        "Prismarine",
+        "Prismarine Shard",
+        "Prismarine Crystal",
+        "Dark Prismarine",
+        "Calcite",
+        "Tuff",
+        "Tuff Brick",
+        "Amethyst Block"
+    ],
+
+
+    "⭐ Rare Renewables": [
+        "Totem of Undying",
+        "Elytra",
+        "Shulker Shell",
+        "Shulker Box",
+        "Dragon Breath",
+        "Dragon Egg",
+        "End Crystal",
+        "Nether Star",
+        "beacon"
     ]
 
 };
