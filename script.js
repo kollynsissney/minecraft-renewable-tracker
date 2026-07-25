@@ -199,16 +199,14 @@ updateProgress();
 
 
 
-window.saveItem=function(item,value){
+window.saveItem = function(item, value){
 
+    console.log("Saving:", item, value);
 
-
-set(
-ref(database,"items/"+item),
-value
-);
-
-
+    set(
+        ref(database, "items/" + item),
+        value
+    );
 
 };
 
