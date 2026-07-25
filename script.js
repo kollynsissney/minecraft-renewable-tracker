@@ -238,7 +238,7 @@ function loadTracker() {
     // before we animate away from it.
     void el.offsetHeight;
 
-    el.style.transition = "transform 0.55s cubic-bezier(.22,.61,.36,1)";
+    el.style.transition = "transform 1.1s cubic-bezier(.22,.61,.36,1)";
     el.style.transform = "translate(0, 0)";
 
     el.addEventListener("transitionend", () => {
