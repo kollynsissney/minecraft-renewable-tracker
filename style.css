@@ -329,8 +329,26 @@ button:hover {
     border-radius: 6px 6px 0 0;
 }
 
-/* Completion feedback: a brief glow while the row travels to its new spot
-   (the actual movement is driven by JS, via a FLIP-style transform) */
+/* Floating "ghost" that flies from the item's old spot to its new one when
+   checked off — a separate element from the list, so re-renders can't cut
+   its animation short */
+
+.flying-item {
+    position: fixed;
+    z-index: 1000;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, var(--completed-bg), var(--grass-dark));
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* Completion feedback: a brief glow on the destination row once the
+   flying ghost lands */
 
 @keyframes completeGlow {
     0% {

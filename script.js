@@ -214,43 +214,49 @@ function loadTracker() {
 
   updateProgress();
 
-  // LAST / INVERT / PLAY: for each item that moved, place it back at its
-  // old on-screen spot with a transform (no visible jump), then let it
-  // transition to its real resting position — the row itself travels
-  // across the page instead of the page scrolling to it.
+  // For each item that moved: hide its real (destination) row, spawn a
+  // floating "ghost" copy positioned exactly over its old spot, and fly
+  // that ghost — shift right, then arc down — over to where the real row
+  // now sits. The ghost is appended to <body>, completely independent of
+  // this list, so a later re-render of the tracker can't interrupt it.
   toAnimate.forEach(item => {
     const el = tracker.querySelector(`[data-item="${CSS.escape(item)}"]`);
     const first = firstRects.get(item);
     if (!el || !first) return;
 
     const last = el.getBoundingClientRect();
-    const dx = first.left - last.left;
-    const dy = first.top - last.top;
+    const dx = last.left - first.left;
+    const dy = last.top - first.top;
 
     if (dx === 0 && dy === 0) return;
 
-    el.style.position = "relative";
-    el.style.zIndex = "5";
-    el.style.transition = "none";
-    el.style.transform = `translate(${dx}px, ${dy}px)`;
+    el.style.opacity = "0";
 
-    // A single forced reflow isn't always enough for the browser to commit
-    // this starting position before we hand it a transition — wait two
-    // animation frames so the "from" state is actually painted first,
-    // otherwise it just jumps straight to the end position.
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        el.style.transition = "transform 1.1s cubic-bezier(.22,.61,.36,1)";
-        el.style.transform = "translate(0, 0)";
-      });
+    const ghost = document.createElement("div");
+    ghost.className = "flying-item";
+    ghost.textContent = `✅ ${item}`;
+    ghost.style.left = `${first.left}px`;
+    ghost.style.top = `${first.top}px`;
+    document.body.appendChild(ghost);
+
+    // Waypoints: lift off and shift right first, then arc down and land —
+    // rather than a straight line from A to B.
+    const animation = ghost.animate([
+      { transform: "translate(0px, 0px)", offset: 0 },
+      { transform: `translate(${dx * 0.35 + 60}px, ${dy * 0.1 - 24}px)`, offset: 0.35 },
+      { transform: `translate(${dx * 0.8}px, ${dy * 0.55}px)`, offset: 0.75 },
+      { transform: `translate(${dx}px, ${dy}px)`, offset: 1 }
+    ], {
+      duration: 1400,
+      easing: "cubic-bezier(.36,.07,.19,.97)",
+      fill: "forwards"
     });
 
-    el.addEventListener("transitionend", () => {
-      el.style.transition = "";
-      el.style.transform = "";
-      el.style.position = "";
-      el.style.zIndex = "";
-    }, { once: true });
+    animation.onfinish = () => {
+      ghost.remove();
+      el.style.transition = "opacity 0.3s ease";
+      el.style.opacity = "1";
+    };
   });
 }
 
