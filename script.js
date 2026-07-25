@@ -51,7 +51,7 @@ Farming: [
     "Azalea", "Flowering Azalea", "Moss Block", "Moss Carpet",
     "Vines", "Twisting Vines", "Weeping Vines", "Nether Sprouts",
     "Big Dripleaf", "Small Dripleaf", "Torchflower", "Torchflower Seeds",
-    "Pitcher Plant", "Pitcher Pod", "Grass Block",
+    "Pitcher Plant", "Pitcher Pod",
     "Tall Grass", "Fern", "Flowers", "Wither Rose", "Sugar",
   ],
  
@@ -76,7 +76,7 @@ Farming: [
   ],
  
 
-  "Nautrally Generating Blocks": [
+  "Naturally Generating Blocks": [
     "Cobblestone", "Stone", "Obsidian", "Ice",
     "Packed Ice", "Blue Ice", "Snow Layers", "Powder Snow",
     "Mycelium", "Grass Block", "Sculk", "Sculk Vein",
