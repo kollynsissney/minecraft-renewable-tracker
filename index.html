@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Minecraft Renewable Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>⛏ Minecraft Renewable Item Tracker</h1>
+
+<div class="progress-container">
+    <div id="progress-bar"></div>
+</div>
+
+<p id="progress-text">
+    0 / 0 Items Completed
+</p>
+
+<button onclick="resetTracker()">
+    Reset Progress
+</button>
+
+<br>
+
+<input 
+    type="text" 
+    id="search"
+    placeholder="Search items..."
+    onkeyup="searchItems()"
+>
+
+
+<div id="tracker"></div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
