@@ -329,32 +329,23 @@ button:hover {
     border-radius: 6px 6px 0 0;
 }
 
-/* Completion feedback: brief bounce + glow the moment you check "Completed" */
+/* Completion feedback: a brief glow while the row travels to its new spot
+   (the actual movement is driven by JS, via a FLIP-style transform) */
 
-@keyframes completePop {
+@keyframes completeGlow {
     0% {
-        transform: translateY(0) scale(1);
         background-color: transparent;
     }
-    20% {
-        transform: translateY(-6px) scale(1.02);
-        background-color: rgba(95, 209, 95, 0.2);
-    }
-    50% {
-        transform: translateY(3px) scale(0.99);
-        background-color: rgba(95, 209, 95, 0.1);
-    }
-    75% {
-        transform: translateY(-2px) scale(1.005);
+    30% {
+        background-color: rgba(95, 209, 95, 0.22);
     }
     100% {
-        transform: translateY(0) scale(1);
         background-color: transparent;
     }
 }
 
 .tracker-row.just-completed {
-    animation: completePop 0.8s cubic-bezier(.36, .07, .19, 1.2);
+    animation: completeGlow 0.8s ease;
     border-radius: 6px;
 }
 

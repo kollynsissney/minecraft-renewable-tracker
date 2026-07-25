@@ -157,13 +157,19 @@ function rowHTML(item, category, isCompletedSection, toAnimate) {
 }
 
 function loadTracker() {
-  tracker.innerHTML = "";
-  const completedItems = [];
-
-  // Snapshot which items should animate in this render, then clear the
-  // shared set immediately so a later, unrelated render never replays it.
+  // FIRST: while the old DOM is still in place, record where each item
+  // about to move currently sits on screen.
   const toAnimate = new Set(justCompletedLocally);
   justCompletedLocally.clear();
+
+  const firstRects = new Map();
+  toAnimate.forEach(item => {
+    const el = tracker.querySelector(`[data-item="${CSS.escape(item)}"]`);
+    if (el) firstRects.set(item, el.getBoundingClientRect());
+  });
+
+  tracker.innerHTML = "";
+  const completedItems = [];
 
   for (let category in items) {
     const activeItems = items[category].filter(item => !trackerData[item]?.completed);
@@ -208,13 +214,40 @@ function loadTracker() {
 
   updateProgress();
 
-  // Bring the row you just checked off into view so the animation is
-  // actually visible, even if it landed in the Completed section below the fold.
-  if (toAnimate.size > 0) {
-    const [firstItem] = toAnimate;
-    const row = tracker.querySelector(`[data-item="${CSS.escape(firstItem)}"]`);
-    row?.scrollIntoView({ behavior: "smooth", block: "center" });
-  }
+  // LAST / INVERT / PLAY: for each item that moved, place it back at its
+  // old on-screen spot with a transform (no visible jump), then let it
+  // transition to its real resting position — the row itself travels
+  // across the page instead of the page scrolling to it.
+  toAnimate.forEach(item => {
+    const el = tracker.querySelector(`[data-item="${CSS.escape(item)}"]`);
+    const first = firstRects.get(item);
+    if (!el || !first) return;
+
+    const last = el.getBoundingClientRect();
+    const dx = first.left - last.left;
+    const dy = first.top - last.top;
+
+    if (dx === 0 && dy === 0) return;
+
+    el.style.position = "relative";
+    el.style.zIndex = "5";
+    el.style.transition = "none";
+    el.style.transform = `translate(${dx}px, ${dy}px)`;
+
+    // Force layout so the browser locks in the starting position above
+    // before we animate away from it.
+    void el.offsetHeight;
+
+    el.style.transition = "transform 0.55s cubic-bezier(.22,.61,.36,1)";
+    el.style.transform = "translate(0, 0)";
+
+    el.addEventListener("transitionend", () => {
+      el.style.transition = "";
+      el.style.transform = "";
+      el.style.position = "";
+      el.style.zIndex = "";
+    }, { once: true });
+  });
 }
 
 // Started and Completed are mutually exclusive: checking one clears the other.
