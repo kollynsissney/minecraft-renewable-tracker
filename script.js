@@ -12,7 +12,7 @@ import {
 const firebaseConfig = {
     apiKey: "AIzaSyCn6dgpN_Ed-HxBI5ODghMuu0-I3rF44Oo",
     authDomain: "minecraft-renewable-tracker.firebaseapp.com",
-    databaseURL: "https://minecraft-renewable-tracker-default-rtdb.firebaseio.com",
+    databaseURL: "https://minecraft-renewable-tracker-default-rtdb.firebaseio.com/",
     projectId: "minecraft-renewable-tracker",
     storageBucket: "minecraft-renewable-tracker.firebasestorage.app",
     messagingSenderId: "1047531306156",
