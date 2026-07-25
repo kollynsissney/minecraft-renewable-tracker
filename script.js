@@ -42,7 +42,7 @@ const database = getDatabase(app);
 const items = {
 
 
-farming: [
+Farming: [
     "Wheat", "Wheat Seeds", "Carrot", "Potato", "Beetroot", "Beetroot Seeds",
     "Melon", "Melon Seeds", "Pumpkin", "Pumpkin Seeds", "Sugar Cane",
     "Cactus", "Bamboo", "Cocoa Beans", "Nether Wart", "Sweet Berries",
@@ -55,7 +55,7 @@ farming: [
     "Tall Grass", "Fern", "Flowers", "Wither Rose", "Sugar",
   ],
  
-  animalBreedingAndDrops: [
+  "Animal drops": [
     "Egg", "Feather", "Chicken", "Cooked Chicken",
     "Milk", "Beef", "Cooked Beef", "Leather",
     "Wool", "Mutton", "Porkchop",
@@ -65,7 +65,7 @@ farming: [
     "Sniffer Egg", "Armadillo Scute", "Cod", "Salmon", "Pufferfish", "Tropical Fish",
   ],
  
-  mobDrops: [
+  "Mob drops": [
     "String", "Spider Eye", "Gunpowder", "Bone", "Bone Meal",
     "Rotten Flesh", "Ender Pearl", "Blaze Rod", "Slimeball",
     "Magma Cream", "Ink Sac", "Glow Ink Sac", "Phantom Membrane",
@@ -76,14 +76,14 @@ farming: [
   ],
  
 
-  naturalBlockGeneration: [
+  "Nautrally Generating Blocks": [
     "Cobblestone", "Stone", "Obsidian", "Ice",
     "Packed Ice", "Blue Ice", "Snow Layers", "Powder Snow",
     "Mycelium", "Grass Block", "Sculk", "Sculk Vein",
     "Sculk Sensor", "Sculk Shrieker",
   ],
  
-  bossDrops: [
+  "Boss Drops": [
     "Nether Star", "Dragon Breath",
   ],
 };
