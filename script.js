@@ -81,6 +81,18 @@ const categoryIcons = {
 let trackerData = {};
 const tracker = document.getElementById("tracker");
 
+// Items this browser tab just marked completed, so we can play a one-time
+// "pop" animation on that row. Cleared automatically after the animation.
+const justCompletedLocally = new Set();
+
+// How long the "NEW" badge stays on a freshly-completed item before it fades away.
+const NEW_BADGE_DURATION_MS = 2 * 60 * 60 * 1000; // 2 hours
+
+function isRecentlyCompleted(data) {
+  return !!(data && data.completed && data.completedAt &&
+    (Date.now() - data.completedAt < NEW_BADGE_DURATION_MS));
+}
+
 // Basic escaping so notes text can't break the row's HTML
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, c => ({
@@ -102,13 +114,17 @@ function headerRowHTML() {
 function rowHTML(item, category, isCompletedSection) {
   const data = trackerData[item] || {};
   const notes = data.notes || "";
-  const rowClass = "tracker-row" + (isCompletedSection ? " completed-row" : "");
+  const justCompleted = justCompletedLocally.has(item);
+  const rowClass = "tracker-row"
+    + (isCompletedSection ? " completed-row" : "")
+    + (justCompleted ? " just-completed" : "");
 
   return `
     <div class="${rowClass}">
       <div class="item-name">
         ${item}
         ${isCompletedSection ? `<span class="category-tag">${category}</span>` : ""}
+        ${isRecentlyCompleted(data) ? `<span class="new-badge">New</span>` : ""}
       </div>
 
       <div class="notes-box">
@@ -198,6 +214,21 @@ window.updateItem = function (item, type, value) {
     updates[opposite] = false;
   }
 
+  // Stamp (or clear) a timestamp whenever "completed" changes, so we know
+  // when to stop showing the "NEW" badge.
+  if (type === "completed") {
+    updates.completedAt = value ? Date.now() : null;
+  }
+
+  if (type === "completed" && value) {
+    justCompletedLocally.add(item);
+    // Let the row re-render once with the animation class, then forget it
+    // so a later, unrelated re-render doesn't replay the animation.
+    setTimeout(() => {
+      justCompletedLocally.delete(item);
+    }, 1500);
+  }
+
   update(ref(database, `items/${item}`), updates);
 };
 
@@ -211,6 +242,10 @@ onValue(ref(database, "items"), snapshot => {
   trackerData = snapshot.val() || {};
   loadTracker();
 });
+
+// Nothing else may touch the data for hours at a time, so re-render every
+// few minutes purely to let expired "NEW" badges drop off on their own.
+setInterval(loadTracker, 5 * 60 * 1000);
 
 function updateProgress() {
   let total = 0;
