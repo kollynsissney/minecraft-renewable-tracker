@@ -1,8 +1,30 @@
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
 import { 
+    getDatabase,
     ref,
     set,
     onValue
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+
+const firebaseConfig = {
+
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    databaseURL: "YOUR_DATABASE_URL",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_BUCKET",
+    messagingSenderId: "YOUR_ID",
+    appId: "YOUR_APP_ID"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const database = getDatabase(app);
 
 
 const items = {
@@ -183,7 +205,7 @@ window.saveItem=function(item,value){
 
 
 set(
-ref(window.database,"items/"+item),
+ref(database,"items/"+item),
 value
 );
 
@@ -198,7 +220,7 @@ value
 
 
 onValue(
-ref(window.database,"items"),
+ref(database,"items"),
 (snapshot)=>{
 
 
@@ -232,7 +254,7 @@ items[category].forEach(item=>{
 
 
 set(
-ref(window.database,"items/"+item),
+ref(database,"items/"+item),
 false
 );
 
