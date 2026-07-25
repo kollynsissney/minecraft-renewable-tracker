@@ -28,243 +28,52 @@ const database = getDatabase(app);
 
 const items = {
 
-    "🌱 Crops & Plants": [
-        "Wheat",
-        "Wheat Seeds",
-        "Carrots",
-        "Potatoes",
-        "Beetroot",
-        "Beetroot Seeds",
-        "Pumpkin",
-        "Melon",
-        "Melon Seeds",
-        "Sugar Cane",
-        "Bamboo",
-        "Cactus",
-        "Cocoa Beans",
-        "Nether Wart",
-        "Sweet Berries",
-        "Glow Berries",
-        "Torchflower Seeds",
-        "Pitcher Pods",
-        "Kelp",
-        "Sea Pickle",
-        "Moss Block",
-        "Moss Carpet",
-        "Vines",
-        "Cave Vines",
-        "Weeping Vines",
-        "Twisting Vines",
-        "Azalea",
-        "Flowering Azalea",
-        "Spore Blossom"
-    ],
+ farming: [
+    "Wheat", "Wheat Seeds", "Carrot", "Potato", "Beetroot", "Beetroot Seeds",
+    "Melon", "Melon Seeds", "Pumpkin", "Pumpkin Seeds", "Sugar Cane",
+    "Cactus", "Bamboo", "Cocoa Beans", "Nether Wart", "Sweet Berries",
+    "Glow Berries", "Chorus Fruit", "Chorus Flower", "Kelp", "Sea Pickle",
+    "Red Mushroom", "Brown Mushroom", "Saplings",
+    "Azalea", "Flowering Azalea", "Moss Block", "Moss Carpet",
+    "Vines", "Twisting Vines", "Weeping Vines", "Nether Sprouts",
+    "Big Dripleaf", "Small Dripleaf", "Torchflower", "Torchflower Seeds",
+    "Pitcher Plant", "Pitcher Pod", "Grass Block",
+    "Tall Grass", "Fern", "Flowers", "Wither Rose", "Sugar",
+  ],
+ 
+  animalBreedingAndDrops: [
+    "Egg", "Feather", "Chicken", "Cooked Chicken",
+    "Milk", "Beef", "Cooked Beef", "Leather",
+    "Wool", "Mutton", "Porkchop",
+    "Rabbit Hide", "Rabbit Meat", "Rabbit's Foot",
+    "Honey Bottle", "Honeycomb",
+    "Suspicious Stew", "Mushroom Stew",
+    "Sniffer Egg", "Armadillo Scute", "Cod", "Salmon", "Pufferfish", "Tropical Fish",
+  ],
+ 
+  mobDrops: [
+    "String", "Spider Eye", "Gunpowder", "Bone", "Bone Meal",
+    "Rotten Flesh", "Ender Pearl", "Blaze Rod", "Slimeball",
+    "Magma Cream", "Ink Sac", "Glow Ink Sac", "Phantom Membrane",
+    "Shulker Shell", "Totem of Undying", "Emerald", "Prismarine Shard",
+    "Prismarine Crystals", "Nautilus Shell", "Trident",
+    "Wither Skeleton Skull", "Mob Heads", "Ghast Tear",
+    "Glowstone Dust", "Music Discs",
+  ],
+ 
 
-
-    "🌲 Trees & Wood": [
-        "Oak Log",
-        "Spruce Log",
-        "Birch Log",
-        "Jungle Log",
-        "Acacia Log",
-        "Dark Oak Log",
-        "Mangrove Log",
-        "Cherry Log",
-        "Pale Oak Log",
-        "Crimson Stem",
-        "Warped Stem",
-        "Oak Sapling",
-        "Spruce Sapling",
-        "Birch Sapling",
-        "Jungle Sapling",
-        "Acacia Sapling",
-        "Dark Oak Sapling",
-        "Mangrove Propagule",
-        "Cherry Sapling",
-        "Pale Oak Sapling"
-    ],
-
-
-    "🐄 Passive Mob Farms": [
-        "Leather",
-        "Beef",
-        "Wool",
-        "Mutton",
-        "Porkchop",
-        "Chicken",
-        "Feathers",
-        "Eggs",
-        "Rabbit Hide",
-        "Rabbit Foot",
-        "Rabbit",
-        "Milk",
-        "Honey",
-        "Honeycomb",
-        "Ink Sac",
-        "Glow Ink Sac",
-        "Scute",
-        "Turtle Egg",
-        "Goat Horn",
-        "Frogspawn",
-        "Froglight"
-    ],
-
-
-    "👹 Hostile Mob Farms": [
-        "Rotten Flesh",
-        "Bones",
-        "Bone Meal",
-        "Arrows",
-        "String",
-        "Spider Eye",
-        "Gunpowder",
-        "Ender Pearl",
-        "Slimeball",
-        "Blaze Rod",
-        "Blaze Powder",
-        "Magma Cream",
-        "Ghast Tear",
-        "Wither Skeleton Skull",
-        "Coal",
-        "Phantom Membrane",
-        "Shulker Shell",
-        "Wind Charge",
-        "Breeze Rod",
-        "Trident"
-    ],
-
-
-    "⛏ Block Generators": [
-        "Cobblestone",
-        "Stone",
-        "Smooth Stone",
-        "Mossy Cobblestone",
-        "Cobbled Deepslate",
-        "Basalt",
-        "Blackstone",
-        "Obsidian",
-        "Lava",
-        "Water",
-        "Ice",
-        "Packed Ice",
-        "Blue Ice",
-        "Snow",
-        "Snow Block",
-        "Clay",
-        "Mud",
-        "Dripstone",
-        "Sand",
-        "Red Sand",
-        "Gravel"
-    ],
-
-
-    "🔥 Nether Resources": [
-        "Netherrack",
-        "Soul Sand",
-        "Soul Soil",
-        "Nether Brick",
-        "Quartz",
-        "Quartz Block",
-        "Glowstone",
-        "Magma Block",
-        "Crimson Fungus",
-        "Warped Fungus"
-    ],
-
-
-    "💎 Villager Trading": [
-        "Emerald",
-        "Enchanted Books",
-        "Name Tag",
-        "Saddle",
-        "Glass",
-        "Redstone Dust",
-        "Glowstone Dust",
-        "Diamond Tools",
-        "Diamond Armor",
-        "Maps"
-    ],
-
-
-    "🔴 Redstone Materials": [
-        "Redstone Dust",
-        "Glowstone Dust",
-        "Quartz",
-        "Iron",
-        "Iron Nuggets",
-        "Gold",
-        "Gold Nuggets",
-        "Copper",
-        "Slimeball",
-        "Honey",
-        "Honeycomb",
-        "Amethyst Shard"
-    ],
-
-
-    "🧪 Brewing": [
-        "Nether Wart",
-        "Blaze Powder",
-        "Sugar",
-        "Spider Eye",
-        "Fermented Spider Eye",
-        "Rabbit Foot",
-        "Pufferfish",
-        "Magma Cream",
-        "Ghast Tear",
-        "Golden Carrot",
-        "Glistering Melon",
-        "Phantom Membrane"
-    ],
-
-
-    "🎣 Fishing & Ocean": [
-        "Cod",
-        "Salmon",
-        "Tropical Fish",
-        "Pufferfish",
-        "Nautilus Shell",
-        "Fishing Rod",
-        "Name Tag",
-        "Saddle"
-    ],
-
-
-    "🏗 Building Materials": [
-        "Glass",
-        "Glass Pane",
-        "Brick",
-        "Stone Brick",
-        "Mossy Stone Brick",
-        "Granite",
-        "Diorite",
-        "Andesite",
-        "Prismarine",
-        "Prismarine Shard",
-        "Prismarine Crystal",
-        "Dark Prismarine",
-        "Calcite",
-        "Tuff",
-        "Tuff Brick",
-        "Amethyst Block"
-    ],
-
-
-    "⭐ Rare Renewables": [
-        "Totem of Undying",
-        "Elytra",
-        "Shulker Shell",
-        "Shulker Box",
-        "Dragon Breath",
-        "Dragon Egg",
-        "End Crystal",
-        "Nether Star",
-        "beacon"
-    ]
-
+  naturalBlockGeneration: [
+    "Cobblestone", "Stone", "Obsidian", "Ice",
+    "Packed Ice", "Blue Ice", "Snow Layers", "Powder Snow",
+    "Mycelium", "Grass Block", "Sculk", "Sculk Vein",
+    "Sculk Sensor", "Sculk Shrieker",
+  ],
+ 
+  bossDrops: [
+    "Nether Star", "Dragon Breath",
+  ],
 };
-
+ 
 
 let completedItems = {};
 
