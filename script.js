@@ -62,7 +62,7 @@ Farming: [
     "Rabbit Hide", "Rabbit Meat", "Rabbit's Foot",
     "Honey Bottle", "Honeycomb",
     "Suspicious Stew", "Mushroom Stew",
-    "Sniffer Egg", "Armadillo Scute", "Cod", "Salmon", "Pufferfish", "Tropical Fish",
+    "Sniffer Egg", "Armadillo Scute", "Cod", "Salmon", "Pufferfish", "Tropical Fish", "Frog Lights"
   ],
  
   "Mob drops": [
