@@ -234,12 +234,16 @@ function loadTracker() {
     el.style.transition = "none";
     el.style.transform = `translate(${dx}px, ${dy}px)`;
 
-    // Force layout so the browser locks in the starting position above
-    // before we animate away from it.
-    void el.offsetHeight;
-
-    el.style.transition = "transform 1.1s cubic-bezier(.22,.61,.36,1)";
-    el.style.transform = "translate(0, 0)";
+    // A single forced reflow isn't always enough for the browser to commit
+    // this starting position before we hand it a transition — wait two
+    // animation frames so the "from" state is actually painted first,
+    // otherwise it just jumps straight to the end position.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        el.style.transition = "transform 1.1s cubic-bezier(.22,.61,.36,1)";
+        el.style.transform = "translate(0, 0)";
+      });
+    });
 
     el.addEventListener("transitionend", () => {
       el.style.transition = "";
