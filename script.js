@@ -114,8 +114,7 @@ function loadTracker(){
         items[category].forEach(item => {
 
 
-            let checked =
-            localStorage.getItem(item) === "true";
+            let checked = window.firebaseItems?.[item] || false;
 
 
             categoryDiv.innerHTML += `
@@ -280,4 +279,12 @@ function searchItems(){
 
 
 
-loadTracker();
+database.ref("items").on("value", snapshot => {
+
+    let data = snapshot.val() || {};
+
+    window.firebaseItems = data;
+
+    loadTracker();
+
+});
