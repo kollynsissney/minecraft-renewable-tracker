@@ -56,7 +56,7 @@ Farming: [
   ],
  
   "Animal drops": [
-    "Egg", "Feather", "Chicken", "Cooked Chicken",
+    "Iron", "Egg", "Feather", "Chicken", "Cooked Chicken",
     "Milk", "Beef", "Cooked Beef", "Leather",
     "Wool", "Mutton", "Porkchop",
     "Rabbit Hide", "Rabbit Meat", "Rabbit's Foot",
@@ -80,7 +80,7 @@ Farming: [
     "Cobblestone", "Stone", "Obsidian", "Ice",
     "Packed Ice", "Blue Ice", "Snow Layers", "Powder Snow",
     "Mycelium", "Grass Block", "Sculk", "Sculk Vein",
-    "Sculk Sensor", "Sculk Shrieker",
+    "Sculk Sensor", "Sculk Shrieker", "Resin", "Gravity Blocks"
   ],
  
   "Boss Drops": [
