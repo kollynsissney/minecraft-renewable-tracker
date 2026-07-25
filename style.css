@@ -85,3 +85,6 @@ button:hover {
     transition: 0.3s;
 
 }
+.item:has(input:nth-of-type(2):checked){
+    opacity:0.6;
+}

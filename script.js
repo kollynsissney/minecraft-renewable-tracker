@@ -86,76 +86,75 @@ document.getElementById("tracker");
 
 function loadTracker(){
 
-
-tracker.innerHTML="";
-
-
-for(let category in items){
+    tracker.innerHTML = "";
 
 
-let box=document.createElement("div");
+    for(let category in items){
 
-box.className="category";
+        let box = document.createElement("div");
 
-
-box.innerHTML=
-`<h2>${category}</h2>`;
+        box.className = "category";
 
 
-
-items[category].forEach(item=>{
-
-
-let checked =
-completedItems[item] || false;
+        box.innerHTML = `<h2>${category}</h2>`;
 
 
+        items[category].forEach(item => {
 
-box.innerHTML += `
+            let data = completedItems[item] || {};
 
-<div class="item">
-
-<input 
-type="checkbox"
-${checked ? "checked":""}
-onchange="saveItem('${item}',this.checked)"
->
-
-${item}
-
-</div>
-
-`;
+            let started = data.started || false;
+            let completed = data.completed || false;
 
 
+            box.innerHTML += `
 
-});
+            <div class="item">
+
+                <span>${item}</span>
+
+                <label>
+                    Started
+                    <input 
+                    type="checkbox"
+                    ${started ? "checked" : ""}
+                    onchange="updateItem('${item}','started',this.checked)">
+                </label>
 
 
+                <label>
+                    Done
+                    <input 
+                    type="checkbox"
+                    ${completed ? "checked" : ""}
+                    onchange="updateItem('${item}','completed',this.checked)">
+                </label>
 
-tracker.appendChild(box);
+            </div>
 
+            `;
+
+        });
+
+
+        tracker.appendChild(box);
+
+    }
+
+
+    updateProgress();
 
 }
 
 
 
-updateProgress();
-
-
-}
 
 
 
-
-
-
-window.saveItem = function(item, value){
-
-    console.log("Saving:", item, value);
+window.updateItem = function(item,type,value){
 
     set(
-        ref(database, "items/" + item),
+        ref(database, `items/${item}/${type}`),
         value
     );
 
@@ -189,34 +188,17 @@ loadTracker();
 
 
 
-window.resetTracker=function(){
-
-
-if(confirm("Reset everything?")){
-
-
-for(let category in items){
-
-
 items[category].forEach(item=>{
 
-
-set(
-ref(database,"items/"+item),
-false
-);
-
+    set(
+        ref(database, `items/${item}`),
+        {
+            started:false,
+            completed:false
+        }
+    );
 
 });
-
-
-}
-
-
-}
-
-
-};
 
 
 
@@ -228,57 +210,41 @@ false
 
 function updateProgress(){
 
-
-let total=0;
-
-let complete=0;
+    let total = 0;
+    let complete = 0;
 
 
+    for(let category in items){
 
-for(let category in items){
+        items[category].forEach(item=>{
 
+            total++;
 
-items[category].forEach(item=>{
+            if(
+                completedItems[item] &&
+                completedItems[item].completed
+            ){
+                complete++;
+            }
 
+        });
 
-total++;
-
-
-if(completedItems[item]){
-
-complete++;
-
-}
-
-
-});
+    }
 
 
-}
+    let percent =
+    total === 0 ? 0 : (complete / total) * 100;
 
 
-
-let percent =
-(total === 0)
-?0
-:(complete/total)*100;
+    document.getElementById("progress-bar")
+    .style.width = percent + "%";
 
 
-
-document.getElementById("progress-bar")
-.style.width =
-percent+"%";
-
-
-
-document.getElementById("progress-text")
-.innerHTML =
-`${complete} / ${total} Items Completed`;
-
-
+    document.getElementById("progress-text")
+    .innerHTML =
+    `${complete} / ${total} Items Completed`;
 
 }
-
 
 
 
