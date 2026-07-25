@@ -1,149 +1,175 @@
+import { 
+    ref,
+    set,
+    onValue
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
 const items = {
 
-    "Crops": [
-        "Wheat",
-        "Carrots",
-        "Potatoes",
-        "Beetroot",
-        "Pumpkin",
-        "Melon",
-        "Sugar Cane",
-        "Bamboo",
-        "Cactus",
-        "Cocoa Beans",
-        "Nether Wart"
-    ],
+
+"Crops":[
+
+"Wheat",
+"Carrots",
+"Potatoes",
+"Beetroot",
+"Pumpkin",
+"Melon",
+"Sugar Cane",
+"Bamboo",
+"Cactus",
+"Cocoa Beans",
+"Nether Wart"
+
+],
 
 
-    "Trees": [
-        "Oak Log",
-        "Spruce Log",
-        "Birch Log",
-        "Jungle Log",
-        "Acacia Log",
-        "Dark Oak Log",
-        "Mangrove Log",
-        "Cherry Log",
-        "Crimson Stem",
-        "Warped Stem"
-    ],
+
+"Trees":[
+
+"Oak Log",
+"Spruce Log",
+"Birch Log",
+"Jungle Log",
+"Acacia Log",
+"Dark Oak Log",
+"Mangrove Log",
+"Cherry Log",
+"Crimson Stem",
+"Warped Stem"
+
+],
 
 
-    "Animal Farms": [
-        "Leather",
-        "Beef",
-        "Mutton",
-        "Wool",
-        "Eggs",
-        "Chicken",
-        "Porkchop",
-        "Honey",
-        "Honeycomb"
-    ],
+
+"Animal Farms":[
+
+"Leather",
+"Beef",
+"Mutton",
+"Wool",
+"Eggs",
+"Chicken",
+"Porkchop",
+"Honey",
+"Honeycomb"
+
+],
 
 
-    "Mob Farms": [
-        "Rotten Flesh",
-        "Bones",
-        "Arrows",
-        "Gunpowder",
-        "String",
-        "Spider Eye",
-        "Ender Pearl",
-        "Blaze Rod",
-        "Slimeball"
-    ],
+
+"Mob Farms":[
+
+"Rotten Flesh",
+"Bones",
+"Arrows",
+"Gunpowder",
+"String",
+"Spider Eye",
+"Ender Pearl",
+"Blaze Rod",
+"Slimeball"
+
+],
 
 
-    "Villager Trading": [
-        "Emerald",
-        "Enchanted Books",
-        "Name Tags",
-        "Diamond Tools",
-        "Diamond Armor"
-    ],
+
+"Villagers":[
+
+"Emerald",
+"Enchanted Books",
+"Name Tags",
+"Diamond Tools",
+"Diamond Armor"
+
+],
 
 
-    "Block Farms": [
-        "Cobblestone",
-        "Stone",
-        "Basalt",
-        "Obsidian",
-        "Lava",
-        "Snowballs"
-    ]
+
+"Block Farms":[
+
+"Cobblestone",
+"Stone",
+"Basalt",
+"Obsidian",
+"Lava",
+"Snowballs"
+
+]
+
 
 };
 
 
 
-const tracker = document.getElementById("tracker");
+let completedItems = {};
 
 
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-const firebaseConfig = {
-  apiKey: "AIzaSyCn6dgpN_Ed-HxBI5ODghMuu0-I3rF44Oo",
-  authDomain: "minecraft-renewable-tracker.firebaseapp.com",
-  projectId: "minecraft-renewable-tracker",
-  storageBucket: "minecraft-renewable-tracker.firebasestorage.app",
-  messagingSenderId: "1047531306156",
-  appId: "1:1047531306156:web:4a2ce8f08e1516e946f309",
-  measurementId: "G-YWP0VJ226X"
-};
+
+const tracker =
+document.getElementById("tracker");
 
 
 
 function loadTracker(){
 
-    tracker.innerHTML = "";
+
+tracker.innerHTML="";
 
 
-    for(let category in items){
+for(let category in items){
 
 
-        let categoryDiv = document.createElement("div");
+let box=document.createElement("div");
 
-        categoryDiv.className = "category";
-
-
-        categoryDiv.innerHTML =
-        `<h2>${category}</h2>`;
+box.className="category";
 
 
-        items[category].forEach(item => {
+box.innerHTML=
+`<h2>${category}</h2>`;
 
 
-            let checked = window.firebaseItems?.[item] || false;
+
+items[category].forEach(item=>{
 
 
-            categoryDiv.innerHTML += `
-
-            <div class="item">
-
-            <input 
-            type="checkbox"
-            ${checked ? "checked" : ""}
-            onchange="saveItem('${item}', this.checked)"
-            >
-
-            ${item}
-
-            </div>
-
-            `;
+let checked =
+completedItems[item] || false;
 
 
-        });
+
+box.innerHTML += `
+
+<div class="item">
+
+<input 
+type="checkbox"
+${checked ? "checked":""}
+onchange="saveItem('${item}',this.checked)"
+>
+
+${item}
+
+</div>
+
+`;
 
 
-        tracker.appendChild(categoryDiv);
+
+});
 
 
-    }
+
+tracker.appendChild(box);
 
 
-    updateProgress();
+}
+
+
+
+updateProgress();
+
 
 }
 
@@ -151,13 +177,80 @@ function loadTracker(){
 
 
 
-function saveItem(item, value){
 
-    database.ref("items/" + item).set(value);
+window.saveItem=function(item,value){
 
-    updateProgress();
+
+
+set(
+ref(database,"items/"+item),
+value
+);
+
+
+
+};
+
+
+
+
+
+
+
+onValue(
+ref(database,"items"),
+(snapshot)=>{
+
+
+completedItems =
+snapshot.val() || {};
+
+
+loadTracker();
+
 
 }
+
+);
+
+
+
+
+
+
+
+window.resetTracker=function(){
+
+
+if(confirm("Reset everything?")){
+
+
+for(let category in items){
+
+
+items[category].forEach(item=>{
+
+
+set(
+ref(database,"items/"+item),
+false
+);
+
+
+});
+
+
+}
+
+
+}
+
+
+};
+
+
+
+
 
 
 
@@ -166,125 +259,93 @@ function saveItem(item, value){
 function updateProgress(){
 
 
-    let total = 0;
+let total=0;
 
-    let completed = 0;
-
-
-
-    for(let category in items){
-
-
-        items[category].forEach(item=>{
-
-
-            total++;
-
-
-            if(localStorage.getItem(item)==="true"){
-
-                completed++;
-
-            }
-
-
-        });
-
-
-    }
+let complete=0;
 
 
 
-    let percent = 0;
+for(let category in items){
 
 
-    if(total > 0){
-
-        percent = (completed / total) * 100;
-
-    }
+items[category].forEach(item=>{
 
 
-
-    document.getElementById("progress-bar")
-    .style.width = percent + "%";
+total++;
 
 
+if(completedItems[item]){
 
-    document.getElementById("progress-text")
-    .innerHTML =
-    `${completed} / ${total} Items Completed`;
+complete++;
 
 }
 
-
-
-
-
-function resetTracker(){
-
-
-    let confirmReset =
-    confirm("Are you sure you want to reset everything?");
-
-
-    if(confirmReset){
-
-        localStorage.clear();
-
-        loadTracker();
-
-    }
-
-
-}
-
-
-
-
-
-function searchItems(){
-
-
-    let search =
-    document.getElementById("search")
-    .value
-    .toLowerCase();
-
-
-
-    document.querySelectorAll(".item")
-    .forEach(item=>{
-
-
-        if(item.innerText.toLowerCase().includes(search)){
-
-            item.style.display="block";
-
-        }
-
-        else{
-
-            item.style.display="none";
-
-        }
-
-
-    });
-
-
-}
-
-
-
-
-
-database.ref("items").on("value", snapshot => {
-
-    let data = snapshot.val() || {};
-
-    window.firebaseItems = data;
-
-    loadTracker();
 
 });
+
+
+}
+
+
+
+let percent =
+(total === 0)
+?0
+:(complete/total)*100;
+
+
+
+document.getElementById("progress-bar")
+.style.width =
+percent+"%";
+
+
+
+document.getElementById("progress-text")
+.innerHTML =
+`${complete} / ${total} Items Completed`;
+
+
+
+}
+
+
+
+
+
+
+
+
+window.searchItems=function(){
+
+
+let text =
+document
+.getElementById("search")
+.value
+.toLowerCase();
+
+
+
+document.querySelectorAll(".item")
+.forEach(item=>{
+
+
+if(
+item.innerText
+.toLowerCase()
+.includes(text)
+)
+
+item.style.display="block";
+
+
+else
+
+item.style.display="none";
+
+
+});
+
+
+};
