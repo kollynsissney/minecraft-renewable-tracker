@@ -80,6 +80,19 @@ const items = {
 const tracker = document.getElementById("tracker");
 
 
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+const firebaseConfig = {
+  apiKey: "AIzaSyCn6dgpN_Ed-HxBI5ODghMuu0-I3rF44Oo",
+  authDomain: "minecraft-renewable-tracker.firebaseapp.com",
+  projectId: "minecraft-renewable-tracker",
+  storageBucket: "minecraft-renewable-tracker.firebasestorage.app",
+  messagingSenderId: "1047531306156",
+  appId: "1:1047531306156:web:4a2ce8f08e1516e946f309",
+  measurementId: "G-YWP0VJ226X"
+};
+
+
 
 function loadTracker(){
 
@@ -141,7 +154,7 @@ function loadTracker(){
 
 function saveItem(item, value){
 
-    localStorage.setItem(item,value);
+    database.ref("items/" + item).set(value);
 
     updateProgress();
 
