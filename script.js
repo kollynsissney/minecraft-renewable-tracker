@@ -96,10 +96,19 @@ function loadTracker(){
         box.className = "category";
 
 
-        box.innerHTML = `<h2>${category}</h2>`;
+        box.innerHTML = `
+            <h2>${category}</h2>
+
+            <div class="tracker-header">
+                <div>Item</div>
+                <div class="started-header">Started</div>
+                <div class="completed-header">Completed</div>
+            </div>
+        `;
 
 
-        items[category].forEach(item => {
+        items[category].forEach(item=>{
+
 
             let data = completedItems[item] || {};
 
@@ -109,30 +118,32 @@ function loadTracker(){
 
             box.innerHTML += `
 
-            <div class="item">
+            <div class="tracker-row">
 
-                <span>${item}</span>
+                <div class="item-name">
+                    ${item}
+                </div>
 
-                <label>
-                    Started
+
+                <div class="started-box">
                     <input 
                     type="checkbox"
-                    ${started ? "checked" : ""}
+                    ${started ? "checked":""}
                     onchange="updateItem('${item}','started',this.checked)">
-                </label>
+                </div>
 
 
-                <label>
-                    Done
+                <div class="completed-box">
                     <input 
                     type="checkbox"
-                    ${completed ? "checked" : ""}
+                    ${completed ? "checked":""}
                     onchange="updateItem('${item}','completed',this.checked)">
-                </label>
+                </div>
 
             </div>
 
             `;
+
 
         });
 
@@ -145,7 +156,6 @@ function loadTracker(){
     updateProgress();
 
 }
-
 
 
 

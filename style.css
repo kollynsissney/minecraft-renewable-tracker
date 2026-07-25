@@ -6,10 +6,14 @@ body {
 }
 
 
+/* Title */
+
 h1 {
     color: #55ff55;
 }
 
+
+/* Tracker container */
 
 #tracker {
     max-width: 900px;
@@ -18,50 +22,84 @@ h1 {
 }
 
 
+/* Categories */
+
 .category {
+
     background-color: #333;
+
     margin: 20px;
+
     padding: 15px;
+
     border-radius: 10px;
+
 }
 
 
 .category h2 {
+
     color: #ffaa00;
+
+    margin-top: 0;
+
 }
 
 
-.item {
-    padding: 6px;
-}
 
+/* Search bar */
 
-input {
+#search {
+
     width: 300px;
+
     padding: 10px;
+
     margin: 15px;
+
     font-size: 16px;
+
+    border-radius: 5px;
+
+    border: none;
+
 }
 
+
+
+/* Buttons */
 
 button {
+
     padding: 10px 20px;
+
     background-color: #55aa55;
+
     color: white;
+
     border: none;
+
     border-radius: 5px;
+
     cursor: pointer;
+
 }
 
 
 button:hover {
+
     background-color: #77cc77;
+
 }
 
+
+
+/* Progress bar */
 
 .progress-container {
 
     width: 80%;
+
     height: 25px;
 
     background-color: #444;
@@ -71,6 +109,7 @@ button:hover {
     border-radius: 10px;
 
     overflow: hidden;
+
 }
 
 
@@ -85,6 +124,161 @@ button:hover {
     transition: 0.3s;
 
 }
-.item:has(input:nth-of-type(2):checked){
-    opacity:0.6;
+
+
+
+/* Tracker table */
+
+.tracker-header,
+.tracker-row {
+
+    display: grid;
+
+    grid-template-columns: 1fr 120px 120px;
+
+    align-items: center;
+
+}
+
+
+
+/* Header row */
+
+.tracker-header {
+
+    font-weight: bold;
+
+    padding: 10px 0;
+
+    text-align: center;
+
+    border-bottom: 2px solid #555;
+
+}
+
+
+
+/* Item rows */
+
+.tracker-row {
+
+    min-height: 40px;
+
+    border-bottom: 1px solid #555;
+
+}
+
+
+
+/* Item name */
+
+.item-name {
+
+    padding-left: 10px;
+
+    text-align: left;
+
+}
+
+
+
+/* Status columns */
+
+.started-header,
+.started-box {
+
+    background-color: #c99a32;
+
+    text-align: center;
+
+}
+
+
+.completed-header,
+.completed-box {
+
+    background-color: #55aa55;
+
+    text-align: center;
+
+}
+
+
+
+/* Checkbox containers */
+
+.started-box,
+.completed-box {
+
+    height: 40px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+
+
+/* Checkbox styling */
+
+.tracker-row input[type="checkbox"] {
+
+    width: auto;
+
+    height: auto;
+
+    margin: 0;
+
+    padding: 0;
+
+    transform: scale(1.3);
+
+    cursor: pointer;
+
+}
+
+
+
+/* Header colors */
+
+.started-header {
+
+    color: white;
+
+    padding: 8px;
+
+}
+
+
+.completed-header {
+
+    color: white;
+
+    padding: 8px;
+
+}
+
+
+
+/* Mobile support */
+
+@media screen and (max-width: 600px) {
+
+    .tracker-header,
+    .tracker-row {
+
+        grid-template-columns: 1fr 80px 80px;
+
+    }
+
+
+    #search {
+
+        width: 80%;
+
+    }
+
 }
