@@ -250,54 +250,6 @@ loadTracker();
 
 
 
-
-
-
-
-window.resetTracker=function(){
-
-
-if(!confirm("Reset all progress?"))
-return;
-
-
-
-for(let category in items){
-
-
-items[category].forEach(item=>{
-
-
-set(
-
-ref(database,`items/${item}`),
-
-{
-
-started:false,
-
-completed:false
-
-}
-
-);
-
-
-});
-
-
-}
-
-
-};
-
-
-
-
-
-
-
-
 function updateProgress(){
 
 
