@@ -7,100 +7,100 @@ import {
 
 const items = {
 
+    "Crops": [
+        "Wheat",
+        "Carrots",
+        "Potatoes",
+        "Beetroot",
+        "Pumpkin",
+        "Melon",
+        "Sugar Cane",
+        "Bamboo",
+        "Cactus",
+        "Cocoa Beans",
+        "Nether Wart",
+        "Sweet Berries",
+        "Glow Berries",
+        "Kelp",
+        "Sea Pickles",
+        "Torchflower Seeds",
+        "Pitcher Pods"
+    ],
 
-"Crops":[
+    "Trees": [
+        "Oak Log",
+        "Spruce Log",
+        "Birch Log",
+        "Jungle Log",
+        "Acacia Log",
+        "Dark Oak Log",
+        "Mangrove Log",
+        "Cherry Log",
+        "Pale Oak Log",
+        "Crimson Stem",
+        "Warped Stem"
+    ],
 
-"Wheat",
-"Carrots",
-"Potatoes",
-"Beetroot",
-"Pumpkin",
-"Melon",
-"Sugar Cane",
-"Bamboo",
-"Cactus",
-"Cocoa Beans",
-"Nether Wart"
+    "Animal Farms": [
+        "Leather",
+        "Beef",
+        "Mutton",
+        "Wool",
+        "Eggs",
+        "Chicken",
+        "Porkchop",
+        "Rabbit Hide",
+        "Rabbit Foot",
+        "Honey",
+        "Honeycomb",
+        "Milk",
+        "Scute"
+    ],
 
-],
+    "Mob Farms": [
+        "Rotten Flesh",
+        "Bones",
+        "Arrows",
+        "Gunpowder",
+        "String",
+        "Spider Eye",
+        "Ender Pearl",
+        "Blaze Rod",
+        "Slimeball",
+        "Magma Cream",
+        "Ghast Tear",
+        "Prismarine Shards",
+        "Prismarine Crystals",
+        "Wither Skeleton Skull",
+        "Trident"
+    ],
 
+    "Villager Trading": [
+        "Emeralds",
+        "Enchanted Books",
+        "Name Tags",
+        "Saddles",
+        "Diamond Tools",
+        "Diamond Armor",
+        "Glass",
+        "Redstone Dust",
+        "Glowstone Dust"
+    ],
 
-
-"Trees":[
-
-"Oak Log",
-"Spruce Log",
-"Birch Log",
-"Jungle Log",
-"Acacia Log",
-"Dark Oak Log",
-"Mangrove Log",
-"Cherry Log",
-"Crimson Stem",
-"Warped Stem"
-
-],
-
-
-
-"Animal Farms":[
-
-"Leather",
-"Beef",
-"Mutton",
-"Wool",
-"Eggs",
-"Chicken",
-"Porkchop",
-"Honey",
-"Honeycomb"
-
-],
-
-
-
-"Mob Farms":[
-
-"Rotten Flesh",
-"Bones",
-"Arrows",
-"Gunpowder",
-"String",
-"Spider Eye",
-"Ender Pearl",
-"Blaze Rod",
-"Slimeball"
-
-],
-
-
-
-"Villagers":[
-
-"Emerald",
-"Enchanted Books",
-"Name Tags",
-"Diamond Tools",
-"Diamond Armor"
-
-],
-
-
-
-"Block Farms":[
-
-"Cobblestone",
-"Stone",
-"Basalt",
-"Obsidian",
-"Lava",
-"Snowballs"
-
-]
-
+    "Block Farms": [
+        "Cobblestone",
+        "Stone",
+        "Smooth Stone",
+        "Basalt",
+        "Obsidian",
+        "Lava",
+        "Snowballs",
+        "Clay",
+        "Mud",
+        "Dripstone"
+    ]
 
 };
-
 
 
 let completedItems = {};
