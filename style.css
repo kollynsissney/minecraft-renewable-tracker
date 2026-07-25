@@ -232,7 +232,8 @@ button:hover {
     vertical-align: middle;
 }
 
-/* Completed rows: struck through and greyed out */
+/* Completed rows: item name struck through and slightly muted, but the
+   "New" badge stays fully vivid */
 
 .completed-row .item-name {
     text-decoration: line-through;
@@ -240,8 +241,8 @@ button:hover {
     font-weight: 400;
 }
 
-.completed-row {
-    opacity: 0.7;
+.completed-row .new-badge {
+    color: #14161a;
 }
 
 /* Notes column */
@@ -328,32 +329,32 @@ button:hover {
     border-radius: 6px 6px 0 0;
 }
 
-/* Completion feedback: brief pop + glow the moment you check "Completed" */
+/* Completion feedback: brief bounce + glow the moment you check "Completed" */
 
 @keyframes completePop {
     0% {
-        transform: scale(1);
+        transform: translateY(0) scale(1);
         background-color: transparent;
-        box-shadow: inset 0 0 0 rgba(95, 209, 95, 0);
     }
-    25% {
-        transform: scale(1.015);
-        background-color: rgba(95, 209, 95, 0.16);
-        box-shadow: inset 0 0 0 1px rgba(95, 209, 95, 0.4);
+    20% {
+        transform: translateY(-6px) scale(1.02);
+        background-color: rgba(95, 209, 95, 0.2);
     }
-    65% {
-        transform: scale(0.998);
-        background-color: rgba(95, 209, 95, 0.08);
+    50% {
+        transform: translateY(3px) scale(0.99);
+        background-color: rgba(95, 209, 95, 0.1);
+    }
+    75% {
+        transform: translateY(-2px) scale(1.005);
     }
     100% {
-        transform: scale(1);
+        transform: translateY(0) scale(1);
         background-color: transparent;
-        box-shadow: inset 0 0 0 rgba(95, 209, 95, 0);
     }
 }
 
 .tracker-row.just-completed {
-    animation: completePop 0.7s ease;
+    animation: completePop 0.8s cubic-bezier(.36, .07, .19, 1.2);
     border-radius: 6px;
 }
 

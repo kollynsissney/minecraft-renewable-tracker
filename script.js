@@ -111,16 +111,16 @@ function headerRowHTML() {
   `;
 }
 
-function rowHTML(item, category, isCompletedSection) {
+function rowHTML(item, category, isCompletedSection, toAnimate) {
   const data = trackerData[item] || {};
   const notes = data.notes || "";
-  const justCompleted = justCompletedLocally.has(item);
+  const justCompleted = toAnimate.has(item);
   const rowClass = "tracker-row"
     + (isCompletedSection ? " completed-row" : "")
     + (justCompleted ? " just-completed" : "");
 
   return `
-    <div class="${rowClass}">
+    <div class="${rowClass}" data-item="${escapeHtml(item)}">
       <div class="item-name">
         ${item}
         ${isCompletedSection ? `<span class="category-tag">${category}</span>` : ""}
@@ -160,6 +160,11 @@ function loadTracker() {
   tracker.innerHTML = "";
   const completedItems = [];
 
+  // Snapshot which items should animate in this render, then clear the
+  // shared set immediately so a later, unrelated render never replays it.
+  const toAnimate = new Set(justCompletedLocally);
+  justCompletedLocally.clear();
+
   for (let category in items) {
     const activeItems = items[category].filter(item => !trackerData[item]?.completed);
 
@@ -179,7 +184,7 @@ function loadTracker() {
     } else {
       inner += headerRowHTML();
       activeItems.forEach(item => {
-        inner += rowHTML(item, category, false);
+        inner += rowHTML(item, category, false, toAnimate);
       });
     }
 
@@ -194,7 +199,7 @@ function loadTracker() {
     let inner = `<h2>✅ Completed (${completedItems.length})</h2>`;
     inner += headerRowHTML();
     completedItems.forEach(({ item, category }) => {
-      inner += rowHTML(item, category, true);
+      inner += rowHTML(item, category, true, toAnimate);
     });
 
     box.innerHTML = inner;
@@ -202,6 +207,14 @@ function loadTracker() {
   }
 
   updateProgress();
+
+  // Bring the row you just checked off into view so the animation is
+  // actually visible, even if it landed in the Completed section below the fold.
+  if (toAnimate.size > 0) {
+    const [firstItem] = toAnimate;
+    const row = tracker.querySelector(`[data-item="${CSS.escape(firstItem)}"]`);
+    row?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
 }
 
 // Started and Completed are mutually exclusive: checking one clears the other.
@@ -222,11 +235,6 @@ window.updateItem = function (item, type, value) {
 
   if (type === "completed" && value) {
     justCompletedLocally.add(item);
-    // Let the row re-render once with the animation class, then forget it
-    // so a later, unrelated re-render doesn't replay the animation.
-    setTimeout(() => {
-      justCompletedLocally.delete(item);
-    }, 1500);
   }
 
   update(ref(database, `items/${item}`), updates);
