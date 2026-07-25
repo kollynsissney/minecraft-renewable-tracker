@@ -1,24 +1,35 @@
+import { initializeApp } from 
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
-import { 
+import {
     getDatabase,
     ref,
     set,
     onValue
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+} from 
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCn6dgpN_Ed-HxBI5ODghMuu0-I3rF44Oo",
+
+    apiKey: "YOUR_API_KEY",
+
     authDomain: "minecraft-renewable-tracker.firebaseapp.com",
+
     databaseURL: "https://minecraft-renewable-tracker-default-rtdb.firebaseio.com/",
+
     projectId: "minecraft-renewable-tracker",
+
     storageBucket: "minecraft-renewable-tracker.firebasestorage.app",
+
     messagingSenderId: "1047531306156",
-    appId: "1:1047531306156:web:4a2ce8f08e1516e946f309",
-    measurementId: "G-YWP0VJ226X"
+
+    appId: "YOUR_APP_ID"
+
 };
+
 
 
 const app = initializeApp(firebaseConfig);
@@ -26,9 +37,12 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 
+
+
 const items = {
 
- farming: [
+
+farming: [
     "Wheat", "Wheat Seeds", "Carrot", "Potato", "Beetroot", "Beetroot Seeds",
     "Melon", "Melon Seeds", "Pumpkin", "Pumpkin Seeds", "Sugar Cane",
     "Cactus", "Bamboo", "Cocoa Beans", "Nether Wart", "Sweet Berries",
@@ -73,87 +87,124 @@ const items = {
     "Nether Star", "Dragon Breath",
   ],
 };
- 
-
-let completedItems = {};
 
 
 
-const tracker =
-document.getElementById("tracker");
+
+let trackerData = {};
+
+const tracker = document.getElementById("tracker");
+
 
 
 
 function loadTracker(){
 
-    tracker.innerHTML = "";
+
+tracker.innerHTML="";
 
 
-    for(let category in items){
 
-        let box = document.createElement("div");
-
-        box.className = "category";
+for(let category in items){
 
 
-        box.innerHTML = `
-            <h2>${category}</h2>
+let box=document.createElement("div");
 
-            <div class="tracker-header">
-                <div>Item</div>
-                <div class="started-header">Started</div>
-                <div class="completed-header">Completed</div>
-            </div>
-        `;
+box.className="category";
 
 
-        items[category].forEach(item=>{
+
+box.innerHTML=`
+
+<h2>${category}</h2>
 
 
-            let data = completedItems[item] || {};
+<div class="tracker-header">
 
-            let started = data.started || false;
-            let completed = data.completed || false;
+<div>Item</div>
 
+<div class="started-header">
+Started
+</div>
 
-            box.innerHTML += `
+<div class="completed-header">
+Completed
+</div>
 
-            <div class="tracker-row">
+</div>
 
-                <div class="item-name">
-                    ${item}
-                </div>
-
-
-                <div class="started-box">
-                    <input 
-                    type="checkbox"
-                    ${started ? "checked":""}
-                    onchange="updateItem('${item}','started',this.checked)">
-                </div>
+`;
 
 
-                <div class="completed-box">
-                    <input 
-                    type="checkbox"
-                    ${completed ? "checked":""}
-                    onchange="updateItem('${item}','completed',this.checked)">
-                </div>
 
-            </div>
-
-            `;
+items[category].forEach(item=>{
 
 
-        });
+let data = trackerData[item] || {};
 
 
-        tracker.appendChild(box);
 
-    }
+box.innerHTML += `
 
 
-    updateProgress();
+<div class="tracker-row">
+
+
+<div class="item-name">
+${item}
+</div>
+
+
+
+<div class="started-box">
+
+<input 
+type="checkbox"
+
+${data.started ? "checked":""}
+
+onchange="updateItem('${item}','started',this.checked)"
+
+>
+
+</div>
+
+
+
+<div class="completed-box">
+
+<input 
+type="checkbox"
+
+${data.completed ? "checked":""}
+
+onchange="updateItem('${item}','completed',this.checked)"
+
+>
+
+</div>
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
+tracker.appendChild(box);
+
+
+}
+
+
+
+updateProgress();
+
 
 }
 
@@ -161,12 +212,18 @@ function loadTracker(){
 
 
 
-window.updateItem = function(item,type,value){
 
-    set(
-        ref(database, `items/${item}/${type}`),
-        value
-    );
+window.updateItem=function(item,type,value){
+
+
+set(
+
+ref(database,`items/${item}/${type}`),
+
+value
+
+);
+
 
 };
 
@@ -175,15 +232,14 @@ window.updateItem = function(item,type,value){
 
 
 
-
 onValue(
+
 ref(database,"items"),
-(snapshot)=>{
+
+snapshot=>{
 
 
-completedItems =
-snapshot.val() || {};
-
+trackerData=snapshot.val() || {};
 
 loadTracker();
 
@@ -198,18 +254,42 @@ loadTracker();
 
 
 
+window.resetTracker=function(){
+
+
+if(!confirm("Reset all progress?"))
+return;
+
+
+
+for(let category in items){
+
+
 items[category].forEach(item=>{
 
-    set(
-        ref(database, `items/${item}`),
-        {
-            started:false,
-            completed:false
-        }
-    );
+
+set(
+
+ref(database,`items/${item}`),
+
+{
+
+started:false,
+
+completed:false
+
+}
+
+);
+
 
 });
 
+
+}
+
+
+};
 
 
 
@@ -220,42 +300,50 @@ items[category].forEach(item=>{
 
 function updateProgress(){
 
-    let total = 0;
-    let complete = 0;
+
+let total=0;
+
+let completed=0;
 
 
-    for(let category in items){
 
-        items[category].forEach(item=>{
-
-            total++;
-
-            if(
-                completedItems[item] &&
-                completedItems[item].completed
-            ){
-                complete++;
-            }
-
-        });
-
-    }
+for(let category in items){
 
 
-    let percent =
-    total === 0 ? 0 : (complete / total) * 100;
+items[category].forEach(item=>{
 
 
-    document.getElementById("progress-bar")
-    .style.width = percent + "%";
+total++;
 
 
-    document.getElementById("progress-text")
-    .innerHTML =
-    `${complete} / ${total} Items Completed`;
+if(trackerData[item]?.completed)
+
+completed++;
+
+
+
+});
+
 
 }
 
+
+
+let percent = total ? completed/total*100 : 0;
+
+
+
+document.getElementById("progress-bar").style.width =
+percent+"%";
+
+
+
+document.getElementById("progress-text").innerHTML =
+`${completed} / ${total} Items Completed`;
+
+
+
+}
 
 
 
@@ -265,30 +353,21 @@ function updateProgress(){
 window.searchItems=function(){
 
 
-let text =
-document
+let text=document
 .getElementById("search")
 .value
 .toLowerCase();
 
 
 
-document.querySelectorAll(".item")
-.forEach(item=>{
+document.querySelectorAll(".tracker-row")
+.forEach(row=>{
 
 
-if(
-item.innerText
-.toLowerCase()
-.includes(text)
-)
-
-item.style.display="block";
-
-
-else
-
-item.style.display="none";
+row.style.display =
+row.innerText.toLowerCase().includes(text)
+?"grid"
+:"none";
 
 
 });
